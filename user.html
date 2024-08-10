@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background-color: #3498db;
+            background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            color:white
+}   
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            margin-top: 8px;
+            font-family:Arial,sans-serif;
+            font-size: large;
+            font-weight: 200;
+        }
+        input[type="text"], input[type="password"] {
+        width: 50%;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid ;
+}
+        .courses-list {
+            margin-bottom: 20px;
+        }
+
+        .course-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid beige;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #007BFF;
+            margin-top:8px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+
+<h2>User Dashboard</h2>
+
+<!-- Login Form -->
+<div id="loginForm">
+    <h3>Login</h3>
+    <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" required>
+    </div>
+    <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+    </div>
+    <button onclick="login()">Login</button>
+</div>
+
+<!-- Courses List -->
+<div id="coursesList" style="display:none;">
+    <h3>Courses</h3>
+    <div class="courses-list" id="coursesListItems">
+       
+    </div>
+</div>
+
+<!-- Registered Courses -->
+<div id="registeredCourses" style="display:none;">
+    <h3>Registered Courses</h3>
+    <div class="courses-list" id="registeredCoursesList">
+        
+    </div>
+    <button onclick="viewCompletedCourses()">View Completed Courses</button>
+</div>
+
+<!-- Completed Courses History -->
+<div id="completedCourses" style="display:none;">
+    <h3>Completed Courses</h3>
+    <div class="courses-list" id="completedCoursesList">
+     
+    </div>
+</div>
+
+<!-- Payment -->
+<div id="paymentSection" style="display:none;">
+    <h3>Payment</h3>
+    <button onclick="payFees()">Pay Fees</button>
+</div>
+
+<script>
+    // Dummy data for courses
+    const coursesData = [
+        { id: 1, name: 'Course A', fee: 100 },
+        { id: 2, name: 'Course B', fee: 150 },
+        { id: 3, name: 'Course C', fee: 200 }
+    ];
+
+    let registeredCourses = [];
+
+    function login() {
+        let flag1=false;
+        let flag2=false;
+    let username = document.getElementById("username").value;
+    if(username=="")
+    {
+        alert("fill username");
+    }
+    else{
+        flag1=true;
+        
+    }
+    
+    let password = document.getElementById("password").value;
+
+    // Regular expression for password validation
+    let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+    if (!passwordRegex.test(password)) {
+        alert("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one digit.");
+        
+    } else {
+        flag2=true;
+       
+        console.log("pass else")
+    }
+    if(flag1==true && flag2==true)
+    {
+        displayCourses()
+    }
+}
+
+    function displayCourses() {
+        const coursesListItems = document.getElementById('coursesListItems');
+        let coursesHtml = '';
+
+        coursesData.forEach(course => {
+            coursesHtml += `
+    <div class="course-item">
+        <span>${course.name} - ${course.fee}</span>
+        <button onclick="registerCourse(${course.id})">Register</button>
+    </div>
+`;
+
+        });
+
+        coursesListItems.innerHTML = coursesHtml;
+        document.getElementById('coursesList').style.display = 'block';
+    }
+
+    function registerCourse(courseId) {
+        const course = coursesData.find(c => c.id === courseId);
+        registeredCourses.push(course);
+
+    
+        displayRegisteredCourses();
+    }
+
+    function displayRegisteredCourses() {
+        const registeredCoursesList = document.getElementById('registeredCoursesList');
+        let registeredCoursesHtml = '';
+
+        registeredCourses.forEach(course => {
+            registeredCoursesHtml += `
+                <div class="course-item">
+                    <span>${course.name} - $${course.fee}</span>
+                    <button onclick="deleteRegisteredCourse(${course.id})">Delete</button>
+                    <button onclick="payFees(${course.fee})">Pay Fees</button>
+                </div>
+            `;
+        });
+
+        registeredCoursesList.innerHTML = registeredCoursesHtml;
+        document.getElementById('registeredCourses').style.display = 'block';
+    }
+
+    function deleteRegisteredCourse(courseId) {
+        registeredCourses = registeredCourses.filter(course => course.id !== courseId);
+        displayRegisteredCourses();
+    }
+
+    function viewCompletedCourses() {
+        // Dummy completed courses data
+        const completedCoursesData = [
+            { id: 1, name: 'Course A' },
+            { id: 2, name: 'Course B' }
+        ];
+
+        const completedCoursesList = document.getElementById('completedCoursesList');
+        let completedCoursesHtml = '';
+
+        completedCoursesData.forEach(course => {
+            completedCoursesHtml += `
+                <div class="course-item">
+                    <span>${course.name}</span>
+                </div>
+            `;
+        });
+
+        completedCoursesList.innerHTML = completedCoursesHtml;
+        document.getElementById('completedCourses').style.display = 'block';
+    }
+
+    function payFees(fee) {
+        // Dummy payment logic (Replace with your actual payment logic)
+        window.location.href = "pay.html";
+
+    }
+</script>
+
+</body>
+</html>
