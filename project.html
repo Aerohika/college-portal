@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Management System</title>
+    <style>
+    
+    body {
+    font-family: 'Times New Roman', sans-serif; 
+    font-size: large;
+    background-color: #3498db; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+}
+
+        .container {
+            background-color: beige;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+
+        h2 {
+            color: black;
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            background-color: #3498db; 
+            color: white;
+            border: none;
+            border-radius: 25px;
+            margin: 10px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background-color: skyblue;
+        }
+
+        
+
+        a:hover {
+            color: blue;
+        }
+
+        /* Media query for smaller screens where less than or equal to 480 px */
+        @media (max-width: 480px) {
+            .btn-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Course Management System</h2>
+
+    <div class="btn-container">
+        <a href="admin.html" class="btn">Admin</a>
+        <a href="user.html" class="btn">User</a>
+    </div>
+</div>
+
+</body>
+</html>
